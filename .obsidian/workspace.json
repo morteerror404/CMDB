@@ -171,6 +171,9 @@
   },
   "active": "9d4e5c4f426430d2",
   "lastOpenFiles": [
+    "alexa_skill/interaction_models/custom_slot_types/tipos_Dispositivos",
+    "alexa_skill/interaction_models/custom_slot_types/categorias_Ferramentas.txt",
+    "alexa_skill/interaction_models/custom_slot_types/tipos_peças.txt",
     "alexa_skill/docs/Readme/Postgress.md",
     "alexa_skill/docs/Readme/Estrutura Base/Topologia.md",
     "README.md"
