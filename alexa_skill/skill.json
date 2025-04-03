@@ -1,0 +1,46 @@
+{
+    "version": "1.0",
+    "session": {
+      "new": true,
+      "sessionId": "amzn1.echo-api.session.[unique-value-here]",
+      "application": {
+        "applicationId": "amzn1.ask.skill.[your-skill-id]"
+      },
+      "user": {
+        "userId": "amzn1.ask.account.[fake-user-id]"
+      }
+    },
+    "context": {
+      "System": {
+        "application": {
+          "applicationId": "amzn1.ask.skill.[your-skill-id]"
+        },
+        "user": {
+          "userId": "amzn1.ask.account.[fake-user-id]"
+        },
+        "device": {
+          "deviceId": "amzn1.ask.device.[fake-device-id]",
+          "supportedInterfaces": {}
+        },
+        "apiEndpoint": "https://api.amazonalexa.com",
+        "apiAccessToken": "AxThk..."
+      }
+    },
+    "request": {
+      "type": "IntentRequest",
+      "requestId": "amzn1.echo-api.request.[unique-value-here]",
+      "timestamp": "2020-03-22T17:24:44Z",
+      "locale": "pt-BR",
+      "intent": {
+        "name": "ConsultarPecaIntent",
+        "confirmationStatus": "NONE",
+        "slots": {
+          "peca": {
+            "name": "peca",
+            "value": "parafuso",
+            "confirmationStatus": "NONE"
+          }
+        }
+      }
+    }
+  }
