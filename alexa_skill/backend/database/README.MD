@@ -1,101 +1,130 @@
-# README - Sistema de Gerenciamento de Ativos de TI
+# README - Sistema de Gestão de Ativos de TI
 
-## Visão Geral
-Este sistema foi projetado para gerenciar ativos de TI, incluindo hardware, ferramentas e dispositivos, com controle de transferências entre setores e usuários. O sistema mantém um registro completo (log) de todas as operações realizadas.
+## 📌 Visão Geral
+Sistema completo para controle de ativos de TI, incluindo hardware, dispositivos e ferramentas, com rastreamento de transferências entre setores e status de itens.
 
-## Estrutura do Banco de Dados
+## 🗃️ Estrutura Principal
 
-### Tabelas Principais
+### 📋 Tabelas do Sistema
 
-1. **Log de Operações**
-   - Registra todas as transações do sistema
-   - Campos: data/hora, tipo de operação, quantidade, origem, destino, categoria, tipo
+1. **LOG DE OPERAÇÕES**
+   - `id`: Identificador único (ex: 00001)
+   - `data_hora`: Data e hora da operação (ex: 05042025 12:00)
+   - `tipo_operacao`: Inserir/Transferir/Descarte
+   - `quantidade`: Número de itens (1, 2, 3...)
+   - `origem`: Usuário/Estoque/Descarte
+   - `categoria`: Hardware/Periférico/Dispositivo
+   - `destino`: Setor ou usuário
+   - `conteudo`: Detalhes do item
 
-2. **Formulário de Itens**
-   - Cadastro de todos os itens gerenciados
-   - Campos: ID, tipo (pessoal/não-pessoal), nome, quantidade, tipo de quantidade, origem
+2. **FORMULÁRIO DE ITENS**
+   - `id`: 0001, 0002...
+   - `tipo`: Pessoal/Não-pessoal
+   - `nome`: (ex: Alcalde, WD40)
+   - `quantidade`: Número de unidades
+   - `tipo_quantidade`: Unidade/Litro/Kg
+   - `origem`: Nova/Usuário/Estoque/Descarte
 
-3. **Hardware**
-   - Itens de hardware específicos
-   - Campos: ID, nome, quantidade, origem, local, tipo (Notebook/Desktop)
+3. **HARDWARE**
+   - `id`: 00001
+   - `nome`: (ex: Fonte Acer MXYZ)
+   - `quantidade`: 1
+   - `tipo`: Notebook/Desktop
+   - `local`: Estoque/Usuário/Descarte
 
-4. **Dispositivos**
-   - Dispositivos diversos
-   - Campos: ID, nome, quantidade, origem, local
+4. **DISPOSITIVOS**
+   - Similar à estrutura de hardware
 
-5. **Setores**
-   - Divisões organizacionais
-   - Campos: nome, pendências, andar
+## 🔄 Fluxos de Trabalho
 
-6. **Categorias**
-   - Terminais, Conexões, Hardware, Periféricos, Dispositivos
+### ➕ Inserção de Novo Item
+1. Definir categoria (Hardware/Periférico/Dispositivo)
+2. Especificar tipo (Notebook/Desktop para hardware)
+3. Registrar quantidade e unidade de medida
+4. Definir status inicial (Estoque/Nova/Descarte)
 
-## Fluxos Principais
-
-### Transferência de Itens
-1. Selecionar item (ferramenta, peça de hardware ou dispositivo)
-2. Especificar quantidade
-3. Definir origem (usuário, estoque, descarte)
-4. Definir destino (usuário, estoque, descarte)
-5. Registrar observações
-
-### Tipos de Operações
-- Inserção: Adição de novos itens ao sistema
-- Transferência: Movimentação entre origens/destinos
-- Descarte: Remoção de itens do inventário ativo
-
-## Convenções
-
-### Nomenclatura de Itens
-- **Hardware**: Seguir padrão "Tipo Marca Modelo" (ex: "Fonte Acer MXYZ")
-- **Dispositivos**: Nome descritivo (ex: "Rolander Citro")
-- **Conexões**: Tipo + especificação (ex: "Cabo VGA 2.0m")
-
-### Códigos de Identificação
-- Formato: 00001 (5 dígitos)
-- Sequencial único para cada tabela
-
-## Exemplos de Uso
-
-### Registrar Transferência
+### 🔄 Transferência entre Setores
 ```sql
+-- Exemplo: Transferir fonte para atendimento
 INSERT INTO log_operacoes VALUES (
-    '00001',
-    CURRENT_TIMESTAMP,
+    '00025',
+    NOW(),
     'transferir',
     1,
     'estoque',
     'hardware',
-    'Marcela Atendimento',
+    'Atendimento',
     'Fonte Acer MXYZ',
-    'Transferência para atendimento ao cliente'
+    'Para reposição de equipamento'
 );
 ```
 
-### Consultar Itens em Estoque
+## 📊 Categorias de Itens
+
+| Tipo        | Exemplos                  |
+|-------------|---------------------------|
+| Hardware    | RAM, CPU, Fonte, Gabinete |
+| Periféricos | Teclado, Mouse, Monitor   |
+| Dispositivos| Roteadores, Switches      |
+| Conexões    | Cabos VGA, HDMI, Rede     |
+
+## 🏢 Setores Organizacionais
+
+- **Atendimento**
+- **NOC** (Network Operations Center)
+- **Protopel**
+- **Mene**
+
+## 🏷️ Convenções de Nomenclatura
+
+1. **IDs**: Sempre 5 dígitos (00001)
+2. **Hardware**: 
+   - Formato: `[Tipo] [Marca] [Modelo]`  
+   - Ex: "Fonte Acer MXYZ"
+3. **Localização**:
+   - Estoque_[Setor]
+   - Usuário_[Nome]
+   - Descarte_[Data]
+
+## 🔍 Consultas Úteis
+
 ```sql
+-- Itens disponíveis em estoque
 SELECT * FROM hardware 
-WHERE origem = 'estoque' AND quantidade > 0
-ORDER BY nome;
+WHERE local LIKE 'Estoque%' AND quantidade > 0;
+
+-- Histórico de transferências
+SELECT * FROM log_operacoes
+WHERE destino = 'Atendimento'
+ORDER BY data_hora DESC;
+
+-- Inventário completo por categoria
+SELECT categoria, COUNT(*) as total 
+FROM log_operacoes 
+GROUP BY categoria;
 ```
 
-## Status de Itens
-- **Estoque**: Disponível para uso
-- **Usuário**: Atribuído a uma pessoa
-- **Descarte**: Não está mais em condições de uso
+## ♻️ Status dos Itens
 
-## Setores
-- Atendimento
-- NOC
-- Protopel
-- Mene
+| Status     | Descrição                     |
+|------------|-------------------------------|
+| Estoque    | Disponível para distribuição  |
+| Usuário    | Atribuído a pessoa/setor      |
+| Descarte   | Para descartar/reciclar       |
+| Nova       | Item recém-adquirido          |
 
-## Requisitos do Sistema
-- Banco de dados SQL (MySQL, PostgreSQL ou similar)
-- Interface para registro de operações
-- Relatórios de inventário e movimentação
+## ⚙️ Requisitos Técnicos
 
-## Observações
-- O sistema mantém histórico completo de todas as operações
-- Cada item pode ter seu tipo de quantidade específico (unidades, kg, litros)
-- A localização física dos itens é rastreada (estoque, setor específico)
+- Banco de dados SQL (MySQL/PostgreSQL)
+- Interface web para operações
+- Relatórios periódicos de:
+  - Inventário
+  - Movimentações
+  - Itens para descarte
+
+## 📝 Observações Importantes
+
+1. Todo hardware deve ser classificado como Notebook ou Desktop
+2. Itens pessoais devem ser marcados como "Pessoal"
+3. O sistema mantém histórico completo de todas as operações
+4. Tipos de quantidade devem ser consistentes (evitar misturar Unidade e Kg)
