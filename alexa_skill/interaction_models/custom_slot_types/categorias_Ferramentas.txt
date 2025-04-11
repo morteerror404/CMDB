@@ -1,24 +1,8 @@
-# Fementas Pereciveis
+## pereciveis
 
-Alcool Comum
-Alcool Isoproprilico
-Cola instantânea 
-Desinfetante
-Desingripante
-Fita crepe
-Fita Isolante 
-Fita Velcro
-Pasta Térmica
-Pilha 9V 
-Pilhas AA
-Pilhas AAA
-Toalhas Descartáveis
-Toalhas De Papel 
+Pasta termica
+Alcool
+Desinfetante 
+Lubrificante 
 
-# Fementas Não Pereciveis
-
-Alicate Comum
-Alicate de Bico
-Alicate de Crimpagem
-Alicate de Corte-Rente
-Zumbador Amarelo 
+## não pereciveis

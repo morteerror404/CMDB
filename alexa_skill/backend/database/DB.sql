@@ -15,3 +15,11 @@ CREATE TABLE itens (
   localizacao VARCHAR(100),
   especificacoes JSONB
 );
+CREATE TABLE pereciveis (
+
+  id SERIAL PRIMARY KEY
+  
+
+
+
+)

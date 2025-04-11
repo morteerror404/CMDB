@@ -1,22 +1,4 @@
-# Notebook 
-
-Bateria
-Cooler
-Dicipador
-Memória
-SSD 
-
-# Desktop
-
-# Perifericos
-
-# Rede
-
-# Video 
-
-# Acessório
-
-Suporte de monitor
-Suporte de notebook
-Almofada de Teclado
-Mouse PAD
+# Hardware
+# Acessórios
+# Conectores 
+# Periféricos
